@@ -1,0 +1,18 @@
+<!--
+ - Created by YuriiDyvak on 25.07.2019.
+ -->
+
+<aura:component description="ScrumProject"
+                implements="force:hasRecordId,force:hasSObjectName,flexipage:availableForAllPageTypes"
+                controller="ScrumProjectController">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:attribute name="project" type="sObject"/>
+
+    <lightning:card title="{!'Project :' + v.project.Name}">
+        <aura:set attribute="actions">
+            <lightning:button label="New"/>
+        </aura:set>
+    </lightning:card>
+</aura:component>

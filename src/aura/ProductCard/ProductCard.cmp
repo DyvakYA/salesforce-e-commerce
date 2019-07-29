@@ -1,0 +1,37 @@
+<!--
+ - Created by Dyvak Yurii on 06/14/2019.
+ -->
+
+<aura:component description="ProductCard"
+                controller="ProductCardController">
+
+    <aura:attribute name="productFromParent" type="Product2" required="false" description=""/>
+
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+
+    <aura:handler event="c:CloseProductDetailWindowEvent" action="{!c.closeModel}"/>
+
+    <lightning:card class="productCard" footer="{!v.productFromParent.sobj.Price__c  + ' UAH'}"
+                    body="{!v.productFromParent.sobj.Name}">
+        <aura:set attribute="actions">
+
+            <lightning:buttonIconStateful iconName="utility:answer" onclick="{!c.openModel}"
+                                          alternativeText="Full Info"/>
+            <lightning:button variant="neutral"
+                              label="Buy"
+                              title="Buy" onclick="{!c.createOrder}"/>
+        </aura:set>
+        <div style="text-align: center">
+            <c:Image image="{!v.productFromParent.sobj.Image_128_128__c}"/>
+        </div>
+        <div style="text-align: center;   font-family: 'Roboto Mono', monospace;
+  font-size: 1em;">{!v.productFromParent.sobj.Name}</div>
+    </lightning:card>
+
+
+    <aura:if isTrue="{!v.isOpen}">
+        <c:ModalProductDetail product="{!v.productFromParent}"/>
+    </aura:if>
+
+
+</aura:component>

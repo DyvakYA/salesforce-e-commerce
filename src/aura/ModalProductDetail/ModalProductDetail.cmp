@@ -1,0 +1,66 @@
+<!--
+ - Created by Dyvak Yurii on 06/15/2019.
+ -->
+
+<aura:component description="ModalProductDetail" controller="ProductCardController">
+
+    <aura:attribute name="product" type="Product2" required="false"  />
+
+    <aura:registerEvent name="closeWindowEvent" type="c:CloseProductDetailWindowEvent" />
+
+    <!--###### MODAL BOX Start######-->
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+             aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <!-- ###### MODAL BOX HEADER Start ######-->
+            <header class="slds-modal__header">
+                <lightning:buttonIcon iconName="utility:close"
+                                      onclick="{! c.closeModel }"
+                                      alternativeText="close"
+                                      variant="bare-inverse"
+                                      class="slds-modal__close"/>
+                <div >
+                    <c:Image image="{!v.product.sobj.Image_128_128__c}"/>
+                </div>
+
+                <h2 id="modal-heading-02"
+                    class="slds-text-heading_medium slds-hyphenate">{!v.product.sobj.Name}</h2>
+            </header>
+            <!--###### MODAL BOX BODY Part Start######-->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <p>
+                    <b>
+
+                           {!v.product.sobj.Description}
+
+                    </b>
+                </p>
+            </div>
+            <!--###### MODAL BOX FOOTER Part Start ######-->
+            <footer class="slds-modal__footer">
+
+                <div align="left">
+                    <p >
+                        <h3 >
+                             {! 'In Stock: '+v.product.sobj.Quantity__c}
+                        </h3>
+                        <h4 >
+                            {!v.product.sobj.Price__c + ' UAH'}
+                        </h4>
+                    </p>
+                </div>
+                <lightning:button variant="neutral"
+                                  label="Cancel"
+                                  title="Cancel"
+                                  onclick="{! c.closeModel }"/>
+                <lightning:button variant="brand"
+                                  label="Buy"
+                                  title="Buy"
+                                  onclick="{! c.createOrder }"/>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    <!--###### MODAL BOX Part END Here ######-->
+
+</aura:component>

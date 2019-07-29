@@ -1,0 +1,26 @@
+<!--
+ - Created by Dyvak Yurii on 06/15/2019.
+ -->
+
+<aura:component description="customThemeLayout" implements="forceCommunity:themeLayout">
+
+
+    <aura:attribute name="navBar" type="Aura.Component[]"/>
+
+    <div class="container">
+        <div class="slds-grid slds-gutters slds-align--absolute-center slds-m-top--large">
+
+            <div class="slds-col slds-size--1-of-12 logo">
+                <img src="{!$Resource.Logo}"/>
+            </div>
+
+            <div class="slds-col slds-size--11-of-12 navBar">
+                {!v.navBar}
+            </div>
+        </div>
+        <div>
+            {!v.body}
+        </div>
+
+    </div>
+</aura:component>

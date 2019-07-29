@@ -1,0 +1,23 @@
+<!--
+ - Created by Dyvak Yurii on 06/14/2019.
+ -->
+
+<aura:component description="Products"
+                implements="forceCommunity:availableForAllPageTypes"
+                controller="ProductsController">
+
+<!--    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>-->
+
+    <aura:attribute name="productsFromParent" type="List" required="false" access="public"/>
+
+    <div class="slds-grid slds-wrap">
+        <lightning:layout multipleRows="true">
+            <aura:iteration items="{!v.productsFromParent}" var="product">
+                <lightning:layoutItem size="3" padding="around-small">
+                            <c:ProductCard productFromParent="{!product}"/>
+                </lightning:layoutItem>
+            </aura:iteration>
+        </lightning:layout>
+    </div>
+
+</aura:component>

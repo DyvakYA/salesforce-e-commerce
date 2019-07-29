@@ -1,0 +1,16 @@
+/**
+ * Created by Dyvak Yurii on 06/15/2019.
+ */
+
+.THIS {
+    position: relative;
+    z-index: 1;
+}
+
+.THIS.card {
+    height: 100px;
+}
+
+.THIS .slds-wrap {
+    width: 100%;
+}

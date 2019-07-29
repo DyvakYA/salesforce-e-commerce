@@ -1,0 +1,19 @@
+<!--
+ - Created by Vladimir on 19.06.2019.
+ -->
+
+<aura:component description="AdminOrderListView"
+                implements="forceCommunity:availableForAllPageTypes">
+
+    <lightning:listView aura:id="listViewOrders"
+                        objectApiName="Order"
+                        listName="AllOrders"
+                        rows="4"
+                        showSearchBar="true"
+                        showActionBar="false"
+                        enableInlineEdit="true"
+                        showRowLevelActions="false"
+
+
+    />
+</aura:component>

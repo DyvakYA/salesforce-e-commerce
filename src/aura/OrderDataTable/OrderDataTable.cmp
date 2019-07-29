@@ -1,0 +1,20 @@
+<!--
+ - Created by Dyvak Yurii on 06/16/2019.
+ -->
+
+<aura:component description="OrderDataTable" controller="OrderDataTableController">
+
+    <aura:attribute name="products" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.fetchProducts}"/>
+
+    <lightning:datatable data="{! v.products }"
+                         columns="{! v.columns }"
+                         keyField="productId"
+                         hideCheckboxColumn="true"
+                         onrowaction="{!c.viewRecord}"
+                         onsave="{!c.saveRecords}"/>
+
+
+</aura:component>

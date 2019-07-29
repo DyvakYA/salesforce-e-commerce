@@ -1,0 +1,32 @@
+<!--
+ - Created by YuriiDyvak on 17.07.2019.
+ -->
+
+<aura:component description="RecordListComponent"
+                implements="force:hasRecordId,force:hasSObjectName,flexipage:availableForAllPageTypes"
+                controller="RecordListComponentController">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:attribute name="records" type="Object[]"/>
+
+    <aura:attribute name="recordId" type="String"/>
+
+    <aura:attribute name="fieldSetName" type="String"/>
+
+    <aura:attribute name="sObjectName" type="String"/>
+
+    <aura:attribute name="url" type="String"/>
+
+    <lightning:recordEditForm
+            recordId="{!v.recordId}"
+            objectApiName="{!v.sObjectName}">
+        <!-- the messages component is for error messages -->
+        <lightning:messages/>
+        <aura:iteration items="{!v.records}" var="item">
+            <lightning:inputField fieldName="{!item.name}"/>
+        </aura:iteration>
+
+    </lightning:recordEditForm>
+
+</aura:component>

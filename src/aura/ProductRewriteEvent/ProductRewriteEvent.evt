@@ -1,0 +1,6 @@
+<!--
+ - Created by dyvakyurii on 20.06.19.
+ -->
+
+<aura:event type="APPLICATION" description="ProductRewriteEvent">
+</aura:event>

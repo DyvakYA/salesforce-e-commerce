@@ -1,0 +1,25 @@
+<!--
+ - Created by YuriiDyvak on 24.07.2019.
+ -->
+
+<aura:component description="Check">
+
+    <aura:attribute name="param" type="Object"/>
+    <aura:attribute name="isId" type="Boolean" access="private"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:if isTrue="{!v.isId}">
+        <div>
+            <a href="{!'/one/one.app?#/sObject/'+ v.param.value + '/view'}"
+               target="_blank">{! v.param.name  + ' ' + v.param.value }</a>
+        </div>
+        <aura:set attribute="else">
+            <div>
+                <lightning:input type="text" name="{!'input-' + v.param.name}" label="{!v.param.name}" disabled="true"
+                                 value="{!v.param.value}"/>
+            </div>
+        </aura:set>
+    </aura:if>
+
+</aura:component>

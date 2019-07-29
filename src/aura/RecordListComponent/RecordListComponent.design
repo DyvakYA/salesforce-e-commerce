@@ -1,0 +1,7 @@
+<!--
+ - Created by YuriiDyvak on 22.07.2019.
+ -->
+
+<design:component>
+    <design:attribute label="field Set Name" name="fieldSetName"/>
+</design:component>

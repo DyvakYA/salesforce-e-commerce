@@ -1,0 +1,20 @@
+<aura:component description="TabSet"
+                implements="forceCommunity:availableForAllPageTypes"
+                controller="TabSetController">
+
+    <aura:attribute name="products" type="List" required="false" access="public"/>
+
+    <aura:handler event="c:ProductRewriteEvent" action="{!c.fetchLaptops}"/>
+
+
+    <lightning:tabset variant="scoped">
+        <lightning:tab onactive="{!c.fetchLaptops}" label="Laptop" id="Laptop">
+            <c:Products productsFromParent="{!v.products}"/>
+        </lightning:tab>
+        <lightning:tab onactive="{!c.fetchOthers}" label="Others" id="Other">
+            <c:Products productsFromParent="{!v.products}"/>
+        </lightning:tab>
+
+    </lightning:tabset>
+
+</aura:component>

@@ -1,0 +1,18 @@
+<!--
+ - Created by Vladimir on 19.06.2019.
+ -->
+
+<aura:component description="AdminOrderDataTable"
+                implements="forceCommunity:availableForAllPageTypes"
+                controller="AdminOrderDataTableController">
+
+    <lightning:listView aura:id="listViewAccounts"
+                        objectApiName="Account"
+                        listName="AllAccounts"
+                        rows="4"
+                        showSearchBar="true"
+                        showActionBar="false"
+                        enableInlineEdit="true"
+                        showRowLevelActions="false"
+    />
+</aura:component>

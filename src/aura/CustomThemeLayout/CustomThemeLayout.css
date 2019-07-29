@@ -1,0 +1,39 @@
+/**
+ * Created by Dyvak Yurii on 06/15/2019.
+ */
+
+.THIS {
+    position: relative;
+    z-index: 1;
+}
+
+.THIS.header {
+    height: 100px;
+    max-height: 100px;
+}
+
+.THIS.footer {
+    height: 100px;
+    max-height: 100px;
+}
+
+.THIS .logo {
+    background-color: white;
+    height: 100px;
+}
+
+.THIS.navBar {
+    background-color: white;
+    height: 100px;
+    max-height: 100px;
+}
+
+.THIS.container {
+     margin-left: 10%;
+     margin-right: 10%;
+ }
+
+.THIS.forceCommunityGlobalNavigation {
+    background-color: white;
+    color: black;
+}

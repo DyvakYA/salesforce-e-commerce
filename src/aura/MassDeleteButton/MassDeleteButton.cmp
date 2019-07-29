@@ -1,0 +1,15 @@
+<!--
+ - Created by Vladimir on 19.06.2019.
+ -->
+
+<aura:component description="MassDeleteButton"
+                implements="forceCommunity:availableForAllPageTypes"
+                controller="AdminOrderDataTableController">
+
+    <div align="right">
+        <lightning:button variant="destructive"
+                          label="Delete All Orders"
+                          title="Delete All Orders"
+                          onclick="{! c.massDeleteClick }"/>
+    </div>
+</aura:component>

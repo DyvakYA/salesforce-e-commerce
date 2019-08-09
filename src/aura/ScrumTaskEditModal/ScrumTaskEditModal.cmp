@@ -1,0 +1,30 @@
+<!--
+ - Created by YuriiDyvak on 30.07.2019.
+ -->
+
+<aura:component description="TaskEditModal">
+
+    <aura:attribute name="recordId" type="String"/>
+
+    <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+        <lightning:recordEditForm
+                objectApiName="Task__c"
+                recordId="{!v.recordId}"
+                onsuccess="{!c.handleSuccess}">
+            <lightning:messages/>
+            <lightning:inputField fieldName="Name"/>
+            <lightning:inputField fieldName="Assignee__c"/>
+            <lightning:inputField fieldName="Description__c"/>
+            <lightning:inputField fieldName="Finish_Date__c"/>
+            <lightning:inputField fieldName="Planning_time__c"/>
+            <lightning:inputField fieldName="Project__c"/>
+            <lightning:inputField fieldName="Sprint__c"/>
+            <lightning:inputField fieldName="Stage__c"/>
+            <lightning:inputField fieldName="Start_Day__c"/>
+            <lightning:inputField fieldName="Total_Spend_Time__c"/>
+            <lightning:inputField fieldName="Total_Subtask_Estimate__c"/>
+            <lightning:inputField fieldName="Type__c"/>
+            <lightning:button aura:id="submit" type="submit" label="Save" class="slds-m-top_medium"/>
+        </lightning:recordEditForm>
+    </div>
+</aura:component>

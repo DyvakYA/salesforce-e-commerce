@@ -1,0 +1,21 @@
+<!--
+ - Created by YuriiDyvak on 30.07.2019.
+ -->
+
+<aura:component description="ProjectEditModal">
+
+    <aura:attribute name="recordId" type="String"/>
+
+    <aura:registerEvent name="scrumProjectEditModal" type="c:ScrumProjectEditModal"/>
+
+    <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+        <lightning:recordEditForm
+                objectApiName="Project__c"
+                recordId="{!v.recordId}"
+                onsuccess="{!c.handleSuccess}">
+            <lightning:messages/>
+            <lightning:inputField fieldName="Name"/>
+            <lightning:button aura:id="submit" type="submit" label="Save" class="slds-m-top_medium"/>
+        </lightning:recordEditForm>
+    </div>
+</aura:component>

@@ -1,0 +1,24 @@
+<!--
+ - Created by YuriiDyvak on 30.07.2019.
+ -->
+
+<aura:component description="SprintEditModal">
+
+    <aura:attribute name="recordId" type="String"/>
+
+    <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+        <lightning:recordEditForm
+                objectApiName="Sprint__c"
+                recordId="{!v.recordId}"
+                onsuccess="{!c.handleSuccess}">
+            <lightning:messages/>
+            <lightning:inputField fieldName="Name"/>
+            <lightning:inputField fieldName="Date_finish__c"/>
+            <lightning:inputField fieldName="Project__c"/>
+            <lightning:inputField fieldName="Start_Day__c"/>
+            <lightning:inputField fieldName="Total_Estimate__c"/>
+            <lightning:inputField fieldName="Type__c"/>
+            <lightning:button aura:id="submit" type="submit" label="Save" class="slds-m-top_medium"/>
+        </lightning:recordEditForm>
+    </div>
+</aura:component>

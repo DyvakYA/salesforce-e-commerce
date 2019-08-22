@@ -3,4 +3,6 @@
  -->
 
 <aura:event type="COMPONENT" description="ScrumBacklogMoveToSprintEvent">
+
+    <aura:attribute name="task" type="sObject"/>
 </aura:event>

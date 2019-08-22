@@ -21,6 +21,7 @@ public class EmailSendingService {
     }
 
     public boolean sendEmailWhenAccountContactUpdate() {
+
         return emailSending.email()
                 .to(UserInfo.getUserEmail())
                 .cc(UserInfo.getUserEmail())

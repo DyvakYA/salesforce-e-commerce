@@ -2,5 +2,68 @@
  - Created by YuriiDyvak on 26.07.2019.
  -->
 
-<aura:component description="ScrumBacklogCard">
+<aura:component description="ScrumBacklogCard"
+                controller="ScrumBacklogController"
+                extends="c:LightningService">
+
+    <aura:attribute name="sprintId" type="String"/>
+
+    <aura:attribute name="backlog" type="sObject"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:registerEvent name="deleteBacklogEvent" type="c:ScrumBacklogDeleteEvent"/>
+
+    <aura:registerEvent name="scrumBacklogMoveToSprintEvent" type="c:ScrumBacklogMoveToSprintEvent"/>
+
+    <aura:registerEvent name="scrumSprintProgressRecalculationEvent" type="c:ScrumSprintProgressRecalculationEvent"/>
+
+    <aura:attribute name="showSpinner" type="Boolean"/>
+    <aura:attribute name="showDetails" type="Boolean" default="false"/>
+
+    <lightning:card title="{!v.backlog.task.Name}" class="card">
+        <aura:set attribute="actions">
+            <lightning:buttonIcon iconName="utility:chevronleft" onclick="{!c.moveToSprint}"/>
+            <lightning:buttonIcon iconName="utility:edit" onclick="{!c.showTaskEditModal}" value="{!v.backlog.Id}"/>
+            <lightning:buttonIcon iconName="utility:picklist_type" onclick="{!c.showSubtasks}"/>
+            <lightning:buttonIcon iconName="utility:close" onclick="{!c.deleteBackLog}"/>
+        </aura:set>
+        <p class="slds-p-horizontal_small">
+            <aura:if isTrue="{!v.showSpinner}">
+                <lightning:spinner/>
+            </aura:if>
+
+            <aura:if isTrue="{!v.showDetails}">
+                <a href="javascript:void(0)" onclick="{!c.hideDetails}">
+                    <lightning:icon iconName="utility:chevronup" alternativeText="chevronup" size="xx-small"/>
+                    Hide detail
+                </a>
+                <aura:set attribute="else">
+                    <a href="javascript:void(0)" onclick="{!c.showDetails}">
+                        <lightning:icon iconName="utility:chevrondown" alternativeText="chevrondown" size="xx-small"/>
+                        Show detail
+                    </a>
+                </aura:set>
+            </aura:if>
+
+            <aura:if isTrue="{!v.showDetails}">
+                <aura:if isTrue="{!not(empty(v.backlog))}">
+
+                    <lightning:input name="Assignee" value="{!v.backlog.task.Assignee__c}"
+                                     label="Assignee" maxlength="10" readonly="true"/>
+
+                    <lightning:input name="Sprint" value="{!v.backlog.task.Sprint__c}"
+                                     label="Sprint" maxlength="10" readonly="true"/>
+                    <div style="border: 1px #DCDCDC ">
+                        <aura:unescapedHtml value="{!v.backlog.task.Description__c}"/>
+                    </div>
+
+                    <aura:set attribute="else">
+                        Details is empty
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+        </p>
+    </lightning:card>
+
 </aura:component>

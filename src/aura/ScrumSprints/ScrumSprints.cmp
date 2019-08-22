@@ -2,5 +2,28 @@
  - Created by YuriiDyvak on 31.07.2019.
  -->
 
-<aura:component description="ScrumSprints">
+<aura:component description="ScrumSprints" controller="ScrumSprintController">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:registerEvent name="scrumGetSprintEvent" type="c:ScrumGetSprintEvent"/>
+    <aura:registerEvent name="scrumSprintProgressRecalculationEvent" type="c:ScrumSprintProgressRecalculationEvent"/>
+
+    <aura:attribute name="projectId" type="String"/>
+
+    <aura:attribute name="sprints" type="Object[]"/>
+
+    <div style="margin-right: 1rem; margin-top: 1rem;">
+        <aura:iteration items="{!v.sprints}" var="sprint">
+
+            <lightning:button value="{!sprint}"
+                              onclick="{!c.getSprint}">
+                <div>
+                    {!sprint.sprint.Name}
+                </div>
+
+            </lightning:button>
+
+        </aura:iteration>
+    </div>
 </aura:component>

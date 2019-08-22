@@ -2,19 +2,24 @@
  - Created by YuriiDyvak on 30.07.2019.
  -->
 
-<aura:component description="ProjectEditModal">
+<aura:component description="scrumProjectEditModal"
+                extends="c:LightningService"
+                implements="flexipage:availableForAllPageTypes">
 
-    <aura:attribute name="recordId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
-    <aura:registerEvent name="scrumProjectEditModal" type="c:ScrumProjectEditModal"/>
+    <aura:attribute name="project" type="sObject"/>
+    <aura:registerEvent name="scrumProjectDescriptionEditEvent" type="c:ScrumProjectDescriptionEditEvent"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
 
     <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
         <lightning:recordEditForm
                 objectApiName="Project__c"
-                recordId="{!v.recordId}"
+                recordId="{!v.project.Id}"
                 onsuccess="{!c.handleSuccess}">
             <lightning:messages/>
-            <lightning:inputField fieldName="Name"/>
+            <lightning:inputField aura:id="Name" fieldName="Name"/>
             <lightning:button aura:id="submit" type="submit" label="Save" class="slds-m-top_medium"/>
         </lightning:recordEditForm>
     </div>

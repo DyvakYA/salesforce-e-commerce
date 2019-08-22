@@ -2,5 +2,34 @@
  - Created by YuriiDyvak on 31.07.2019.
  -->
 
-<aura:component description="ScrumProjectDescription">
+<aura:component description="ScrumProjectDescription"
+                controller="ScrumProjectController">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:attribute name="projectId" type="String"/>
+
+    <aura:attribute name="project" type="sObject"/>
+    <aura:attribute name="editCmp" type="sObject"/>
+
+    <aura:handler name="scrumProjectDescriptionEditEvent" event="c.ScrumProjectDescriptionEditEvent"
+                  action="{!c.handleScrumProjectEditProjectEvent}"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:registerEvent name="scrumDeleteSprintEvent" type="c:ScrumDeleteSprintEvent"/>
+
+    <lightning:card>
+        <aura:set attribute="actions">
+            <lightning:button label="Sprints" onclick="{!c.returnToSprints}"/>
+            <lightning:button label="Edit project" onclick="{!c.showProjectEditModal}"/>
+        </aura:set>
+        <aura:set attribute="title">
+            <p class="slds-p-horizontal_small">
+            <div>Project</div>
+            <div>Id : {!v.project.Id}</div>
+            <div>Name : {!v.project.Name}</div>
+            </p>
+        </aura:set>
+    </lightning:card>
 </aura:component>

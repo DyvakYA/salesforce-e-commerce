@@ -4,27 +4,36 @@
 
 <aura:component description="TaskEditModal">
 
-    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="task" type="sObject"/>
+
+    <aura:attribute name="changedFields" type="Object[]"/>
+
+    <aura:registerEvent name="scrumTaskEditEvent" type="c:ScrumTaskEditEvent"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
 
     <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
-        <lightning:recordEditForm
-                objectApiName="Task__c"
-                recordId="{!v.recordId}"
-                onsuccess="{!c.handleSuccess}">
+        <lightning:recordEditForm aura:id="task"
+                                  objectApiName="Task__c"
+                                  recordId="{!v.task.Id}"
+                                  onsuccess="{!c.handleSuccess}">
             <lightning:messages/>
-            <lightning:inputField fieldName="Name"/>
-            <lightning:inputField fieldName="Assignee__c"/>
-            <lightning:inputField fieldName="Description__c"/>
-            <lightning:inputField fieldName="Finish_Date__c"/>
-            <lightning:inputField fieldName="Planning_time__c"/>
-            <lightning:inputField fieldName="Project__c"/>
-            <lightning:inputField fieldName="Sprint__c"/>
-            <lightning:inputField fieldName="Stage__c"/>
-            <lightning:inputField fieldName="Start_Day__c"/>
-            <lightning:inputField fieldName="Total_Spend_Time__c"/>
-            <lightning:inputField fieldName="Total_Subtask_Estimate__c"/>
-            <lightning:inputField fieldName="Type__c"/>
+
+            <lightning:inputField onchange="{!c.changed}" fieldName="Name"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Assignee__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Description__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Finish_Date__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Planning_time__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Project__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Sprint__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Stage__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Start_Day__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Total_Spend_Time__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Total_Subtask_Estimate__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Type__c"/>
+
             <lightning:button aura:id="submit" type="submit" label="Save" class="slds-m-top_medium"/>
+
         </lightning:recordEditForm>
     </div>
 </aura:component>

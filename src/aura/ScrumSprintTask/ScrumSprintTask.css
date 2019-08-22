@@ -2,5 +2,91 @@
  * Created by YuriiDyvak on 01.08.2019.
  */
 
-.THIS {
+.THIS .slds-card {
+    border: 1px #d3d3d3 solid;
+    padding-left: 5px;
+    padding-right: 5px;
+
 }
+
+.THIS .slds-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.THIS .slds-button_neutral {
+    width: 100%;
+}
+
+.THIS .subtask-progress {
+    display: block;
+    vertical-align: baseline;
+    width: 100%;
+    height: 30px;
+}
+
+.THIS .subtask-button {
+    padding: 0;
+}
+
+.THIS .subtask-progress {
+    height: 30px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    text-align: left;
+}
+
+.THIS .subtask-progress:before {
+    content: attr(data-label);
+    font-size: 1em;
+    position: absolute;
+    text-align: center;
+    left: 0;
+}
+
+.THIS .subtask-progress .value {
+    background-color: #7cc4ff;
+    display: inline-block;
+    height: 100%;
+}
+
+.THIS .task-progress {
+    height: 30px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    text-align: left;
+    border: 1px #DCDCDC solid;
+    border-radius: .25rem;
+}
+
+.THIS .task-progress:before {
+    content: attr(data-label);
+    font-size: 1em;
+    position: absolute;
+    top: 5px;
+    text-align: center;
+    left: 0;
+}
+
+.THIS .task-progress .value {
+    background-color: #7cc4ff;
+    display: inline-block;
+    height: 100%;
+}
+
+.THIS .slds-card__header {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.THIS .slds-truncate {
+    margin-right: 5px;
+}
+
+.THIS .flexible{
+    width: 100%;
+}
+

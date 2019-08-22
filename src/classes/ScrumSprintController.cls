@@ -2,15 +2,12 @@
  * Created by YuriiDyvak on 02.08.2019.
  */
 
-public class ScrumController {
-
-
+public class ScrumSprintController {
 
     @AuraEnabled
-    public static List<SprintRecord> getSprintsForProject(String projectId) {
+    public static List<ScrumSprintRecord> getSprintsForProject(String projectId) {
         ScrumSprintService service = (ScrumSprintService) Application.Service.get(ScrumSprintService.class);
-        List<SprintRecord> result = service.getSprintsForProject(projectId);
-        return result;
+        return service.getSprintRecordsForProject(projectId);
     }
 
     @AuraEnabled
@@ -20,9 +17,9 @@ public class ScrumController {
     }
 
     @AuraEnabled
-    public static SprintRecord getSprintById(String sprintId) {
+    public static ScrumSprintRecord getSprintById(String sprintId) {
         ScrumSprintService service = (ScrumSprintService) Application.Service.get(ScrumSprintService.class);
-        return service.getSprintById(sprintId);
+        return service.getSprintRecord(sprintId);
     }
 
     @AuraEnabled
@@ -37,4 +34,11 @@ public class ScrumController {
         return service.getSubtasks(taskId);
     }
 
+    @AuraEnabled
+    public static void trackTimeForSubtask(String subtaskId, String sprintId, String taskId, Integer trackTime) {
+        ScrumTrackTimeService trackTimeService = (ScrumTrackTimeService) Application.Service.get(ScrumTrackTimeService.class);
+        trackTimeService.trackTime(subtaskId, sprintId, taskId, trackTime);
+        ScrumSubtaskService subtaskService = (ScrumSubtaskService) Application.Service.get(ScrumSubtaskService.class);
+        subtaskService.updateSubtaskSpendTime(subtaskId);
+    }
 }

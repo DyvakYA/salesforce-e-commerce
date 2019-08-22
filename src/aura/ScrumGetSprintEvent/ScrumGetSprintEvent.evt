@@ -2,5 +2,7 @@
  - Created by YuriiDyvak on 31.07.2019.
  -->
 
-<aura:event type="APPLICATION" description="ScrumGetSprintEvent">
+<aura:event type="COMPONENT" description="ScrumGetSprintEvent">
+
+    <aura:attribute name="sprint" type="Object"/>
 </aura:event>

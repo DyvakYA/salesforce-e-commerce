@@ -15,7 +15,7 @@
             <!-- ###### MODAL BOX HEADER Start ######-->
             <header class="slds-modal__header">
                 <lightning:buttonIcon iconName="utility:close"
-                                      onclick="{! c.closeModel }"
+                                      onclick="{!c.closeModel}"
                                       alternativeText="close"
                                       variant="bare-inverse"
                                       class="slds-modal__close"/>

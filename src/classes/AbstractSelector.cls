@@ -37,7 +37,8 @@ public virtual class AbstractSelector implements Selector {
     }
 
     public void deleteById(ID id) {
-        String query = '[SELECT ID FROM ' + obj.getDescribe().getLabel() + 'WHERE Id =' + id + ']';
+        String query = 'SELECT ID FROM ' + obj.getDescribe().getName() + ' WHERE Id =' + new SelectorQueryBuilder().getProperId(String.valueOf(id));
+        System.debug(query);
         List<sObject> result = Database.query(query);
         delete result;
     }
@@ -47,27 +48,33 @@ public virtual class AbstractSelector implements Selector {
     }
 
     public List<sObject> findAll() {
-        String query = '[SELECT ID FROM ' + obj + ']';
+        String query = 'SELECT Id, Name FROM ' + obj;
         return Database.query(query);
     }
 
     public List<sObject> findAllById(List<ID> ids) {
-        String query = '[SELECT ID FROM ' + obj.getDescribe().getName() + 'WHERE Id =' + ids + ']';
+        String query = 'SELECT Id, Name FROM ' + obj.getDescribe().getName() + 'WHERE Id =' + ids;
         return Database.query(query);
     }
 
     public sObject findById(Id id) {
-        String query = '[SELECT ID FROM ' + obj.getDescribe().getName() + 'WHERE Id =' + id + ']';
+        String query = 'SELECT Id FROM ' + obj.getDescribe().getName() + 'WHERE Id =' + id;
+        System.debug(query);
         return Database.query(query);
     }
 
     public sObject findById(String id) {
-        String query = '[SELECT ID FROM ' + obj.getDescribe().getName() + 'WHERE Id =' + new SelectorQueryBuilder().getProperId(id) + ']';
-        return Database.query(query);
+        String QUERY = 'SELECT Id, Name FROM ' + obj.getDescribe().getName() + ' WHERE Id =' + new SelectorQueryBuilder().getProperId(id);
+        System.debug(QUERY);
+        return Database.query(QUERY);
     }
 
     public void save(sObject entity) {
-        insert entity;
+        if (entity.Id == null) {
+            insert entity;
+        } else {
+            update entity;
+        }
     }
 
     public void saveAll(List<sObject> entities) {
@@ -105,8 +112,26 @@ public virtual class AbstractSelector implements Selector {
         }
 
         public SelectorQueryBuilder queryWhere(String name, String value) {
-            this.QUERY += ' WHERE ' + name + '=' + getProperId(value);
+
+            if (QUERY.split('SELECT', -1).size() == 2 && QUERY.contains('WHERE')) {
+                this.QUERY += ' AND ' + name + '=' + getProperId(value);
+            } else {
+                this.QUERY += ' WHERE ' + name + '=' + getProperId(value);
+            }
             return this;
+        }
+
+        public SelectorQueryBuilder queryWhere(String name, Set<Id> ids) {
+            this.QUERY += ' WHERE ' + name + ' IN ' + inClausify(ids);
+            return this;
+        }
+
+        public String inClausify(Set<Id> ids) {
+            String inClause = String.format('(\'\'{0}\'\')',
+                    new List<String>{
+                            String.join(new List<Id>(ids), '\',\'')
+                    });
+            return inClause;
         }
 
         public SelectorQueryBuilder queryWhere(String name, EqSymbol value) {
@@ -167,6 +192,26 @@ public virtual class AbstractSelector implements Selector {
             } else {
                 return result;
             }
+        }
+
+        public Object one() {
+            System.debug('QUERY : ' + QUERY);
+            List<sObject> result = Database.query(QUERY);
+            return result.get(0);
+        }
+
+        public Object toList() {
+            System.debug('QUERY : ' + QUERY);
+            List<sObject> result = Database.query(QUERY);
+            return result;
+        }
+
+        public Object toMap() {
+            System.debug('QUERY : ' + QUERY);
+            // List<sObject> result = Database.query(QUERY);
+
+            Map<ID, sObject> result = new Map<ID, sObject>(Database.query(QUERY));
+            return result;
         }
     }
 }

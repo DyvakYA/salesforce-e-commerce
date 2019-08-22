@@ -2,5 +2,52 @@
  * Created by YuriiDyvak on 29.07.2019.
  */
 
-.THIS {
+/*.THIS .card {*/
+/*    background-color: #DCDCDC;*/
+/*}*/
+
+.THIS .sprint {
+    margin-top: 0;
+    padding-bottom: .2rem;
 }
+
+.THIS .task {
+    padding-bottom: .2rem;
+}
+
+.THIS.slds-card {
+    margin-top: 1rem;
+    margin-right: 1rem;
+}
+
+.THIS .sprint-progress {
+    height: 30px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    text-align: left;
+    border: 1px #DCDCDC solid;
+    border-radius: .25rem;
+}
+
+.THIS .sprint-progress:before {
+    content: attr(data-label);
+    font-size: 1em;
+    position: absolute;
+    top: 5px;
+    text-align: center;
+    left: 0;
+}
+
+.THIS .sprint-progress .value {
+    background-color: #7cc4ff;
+    display: inline-block;
+    height: 100%;
+}
+
+.THIS .status-center{
+    text-align: center;
+    margin-top: 5px;
+}
+
+

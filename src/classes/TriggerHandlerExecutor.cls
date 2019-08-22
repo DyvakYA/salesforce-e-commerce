@@ -20,6 +20,7 @@ public with sharing class TriggerHandlerExecutor {
     }
 
     public static void execute(System.Type handlerType) {
+        System.debug('executor execute');
         TriggerHandler handler = handlerPool.get(handlerType);
         if (handler == null) {
             handler = (TriggerHandler) handlerType.newInstance();

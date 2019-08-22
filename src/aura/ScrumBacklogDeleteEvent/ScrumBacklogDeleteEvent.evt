@@ -2,6 +2,6 @@
  - Created by YuriiDyvak on 05.08.2019.
  -->
 
-<aura:event type="COMPONENT" description="DeleteBacklogEvent">
-    <lightning:attribute name="backlog" type="sObject"/>
+<aura:event type="COMPONENT" description="ScrumBacklogDeleteEvent">
+    <aura:attribute name="backlogId" type="String"/>
 </aura:event>

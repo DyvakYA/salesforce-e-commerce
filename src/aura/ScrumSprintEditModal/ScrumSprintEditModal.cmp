@@ -2,23 +2,34 @@
  - Created by YuriiDyvak on 30.07.2019.
  -->
 
-<aura:component description="SprintEditModal">
+<aura:component description="SprintEditModal"
+                extends="">
 
-    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="sprint" type="sObject"/>
+
+    <aura:attribute name="changedFields" type="Object[]"/>
+
+    <aura:registerEvent name="scrumSprintEditEvent" type="c:ScrumSprintEditEvent"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
 
     <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
         <lightning:recordEditForm
                 objectApiName="Sprint__c"
-                recordId="{!v.recordId}"
+                recordId="{!v.sprint.Id}"
                 onsuccess="{!c.handleSuccess}">
+
             <lightning:messages/>
-            <lightning:inputField fieldName="Name"/>
-            <lightning:inputField fieldName="Date_finish__c"/>
-            <lightning:inputField fieldName="Project__c"/>
-            <lightning:inputField fieldName="Start_Day__c"/>
-            <lightning:inputField fieldName="Total_Estimate__c"/>
-            <lightning:inputField fieldName="Type__c"/>
+
+            <lightning:inputField onchange="{!c.changed}" fieldName="Name"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Date_finish__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Project__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Start_Day__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Total_Estimate__c"/>
+            <lightning:inputField onchange="{!c.changed}" fieldName="Type__c"/>
+
             <lightning:button aura:id="submit" type="submit" label="Save" class="slds-m-top_medium"/>
+
         </lightning:recordEditForm>
     </div>
 </aura:component>

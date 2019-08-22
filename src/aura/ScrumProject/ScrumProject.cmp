@@ -8,11 +8,42 @@
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
-    <aura:attribute name="project" type="sObject"/>
+    <aura:attribute name="projectId" type="String"/>
 
-    <lightning:card title="{!'Project :' + v.project.Name}">
-        <aura:set attribute="actions">
-            <lightning:button label="New"/>
-        </aura:set>
-    </lightning:card>
+    <aura:attribute name="recordId" type="String"/>
+
+    <aura:attribute name="backlogs" type="Object[]"/>
+
+    <aura:attribute name="sprint" type="Object"/>
+
+    <aura:handler name="scrumGetSprintEvent" event="c:ScrumGetSprintEvent" action="{!c.handleGetSprintEvent}"/>
+    <aura:handler name="scrumDeleteSprintEvent" event="c:ScrumDeleteSprintEvent" action="{!c.handleDelComponentEvent}"/>
+    <aura:handler name="deleteBacklogEvent" event="c:ScrumBacklogDeleteEvent" action="{!c.handleDeleteBacklogEvent}"/>
+    <aura:handler name="scrumDeleteTrackTimeEvent" event="c:ScrumDeleteTrackTimeEvent" action="{!c.handleDeleteTrackEvent}"/>
+    <aura:handler name="scrumMoveTaskToBacklogEvent" event="c:ScrumMoveTaskToBacklogEvent"
+                  action="{!c.handleMoveTaskToBacklog}"/>
+
+    <aura:handler name="scrumBacklogMoveToSprintEvent" event="c:ScrumBacklogMoveToSprintEvent"
+                  action="{!c.handleMoveBacklogToSprint}"/>
+
+    <aura:handler name="scrumSprintProgressRecalculationEvent" event="c:ScrumSprintProgressRecalculationEvent"
+                  action="{!c.recalculationProgress}"/>
+
+    <aura:if isTrue="{!not(v.recordId)}">
+        <c:ScrumProjectDescription projectId="{!v.projectId}"/>
+    </aura:if>
+
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_9-of-12">
+            <aura:if isTrue="{!v.sprint}">
+                <c:ScrumSprintCard aura:id="scrumSprintCard" sprint="{!v.sprint}"/>
+                <aura:set attribute="else">
+                    <c:ScrumSprints projectId="{!v.projectId}"/>
+                </aura:set>
+            </aura:if>
+        </div>
+        <div class="slds-col slds-size_3-of-12">
+            <c:ScrumBacklog sprintId="{!v.sprint.sprint.Id}" backlogs="{!v.backlogs}"/>
+        </div>
+    </div>
 </aura:component>

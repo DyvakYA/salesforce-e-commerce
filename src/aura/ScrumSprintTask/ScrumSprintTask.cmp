@@ -2,5 +2,97 @@
  - Created by YuriiDyvak on 01.08.2019.
  -->
 
-<aura:component description="ScrumSprintTask">
+<aura:component description="ScrumSprintTask"
+                controller="ScrumSprintController"
+                extends="c:LightningService">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+
+    <aura:attribute name="task" type="sObject"/>
+    <aura:attribute name="sprintId" type="String"/>
+    <aura:attribute name="subtasks" type="Object"/>
+
+    <aura:attribute name="showSubtasks" type="Boolean" default="false"/>
+
+    <aura:attribute name="tracker" type="Object"/>
+
+    <aura:registerEvent name="scrumSubtaskTrackTimeEvent" type="c.ScrumSubtaskTrackTimeEvent"/>
+    <aura:registerEvent name="scrumDeleteTrackTimeEvent" type="c.ScrumDeleteTrackTimeEvent"/>
+
+
+    <aura:registerEvent name="scrumMoveTaskToBacklogEvent" type="c.ScrumMoveTaskToBacklogEvent"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <lightning:layoutItem size="4" padding="around-small">
+        <lightning:card>
+            <aura:set attribute="actions">
+                <lightning:buttonIcon iconName="utility:edit" onclick="{!c.showTaskEditModal}"/>
+                <lightning:buttonIcon iconName="utility:picklist_type" onclick="{!c.showSubtasksModal}"/>
+                <lightning:buttonIcon iconName="utility:chevronright" onclick="{!c.moveToBacklog}"/>
+            </aura:set>
+
+            <aura:set attribute="title">
+                <div class="task-progress" data-label="{!v.task.task.Name}">
+                    <span class="value" style="{!'width:'+ v.task.progress+ '%;'}"></span>
+                </div>
+            </aura:set>
+
+            <aura:unescapedHtml value="{!v.task.task.Description__c}"/>
+
+            <div>
+                <aura:if isTrue="{!v.showSubtasks}">
+                    <aura:set attribute="else">
+                        <a href="javascript:void(0)" onclick="{!c.showSubtasks}">
+                            <lightning:icon iconName="utility:chevrondown" alternativeText="chevrondown"
+                                            size="xx-small"/>
+                            Show subtasks
+                        </a>
+                    </aura:set>
+                    <a href="javascript:void(0)" onclick="{!c.hideSubtasks}">
+                        <lightning:icon iconName="utility:chevronup" alternativeText="chevronup" size="xx-small"/>
+                        Hide subtasks
+                    </a>
+                </aura:if>
+            </div>
+            <aura:if isTrue="{!v.showSubtasks}">
+                <aura:if isTrue="{!not(empty(v.task.subtasks))}">
+                    <lightning:layout multipleRows="true">
+
+                        <aura:iteration items="{!v.subtasks}" var="subtask">
+                            <div style="width: 100%">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-size_8-of-12">
+                                        <lightning:button value="{!subtask.subtask.Name}" class="subtask-button">
+                                            <div class="subtask-progress" data-label="{!subtask.subtask.Name}" onclick="{!c.showSubtaskDetailModal}" data-value="{!subtask.subtask.Id}">
+                                                <span class="value" style="{!'width:'+subtask.progress + '%;'}"></span>
+                                            </div>
+                                        </lightning:button>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12">
+                                        <lightning:input variant="label-hidden" type="number" min="0"
+                                                         value="{!subtask.SpendTime__c}" id="{!subtask.subtask.Id}"
+                                                         onchange="{!c.tracker}"/>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-12">
+                                    <lightning:buttonIcon iconName="utility:check" value="{!subtask.subtask.Id}"
+                                                          onclick="{!c.trackTime}" class="flexible"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:iteration>
+
+                    </lightning:layout>
+                    <aura:set attribute="else">
+                        <div style="text-align: center">Empty</div>
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+        </lightning:card>
+    </lightning:layoutItem>
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner/>
+    </aura:if>
 </aura:component>

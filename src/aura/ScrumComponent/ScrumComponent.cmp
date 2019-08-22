@@ -2,5 +2,13 @@
  - Created by YuriiDyvak on 30.07.2019.
  -->
 
-<aura:component description="ScrumComponent">
+<aura:component description="ScrumComponent"
+                implements="force:hasRecordId,
+                force:hasSObjectName,
+                flexipage:availableForAllPageTypes">
+
+    <aura:attribute name="recordId" type="String" />
+
+    <c:ScrumProject projectId="{!v.recordId}"/>
+
 </aura:component>

@@ -2,5 +2,6 @@
  - Created by YuriiDyvak on 01.08.2019.
  -->
 
-<aura:event type="APPLICATION" description="ScrumDeleteSprintEvent">
+<aura:event type="COMPONENT" description="ScrumDeleteSprintEvent">
+
 </aura:event>

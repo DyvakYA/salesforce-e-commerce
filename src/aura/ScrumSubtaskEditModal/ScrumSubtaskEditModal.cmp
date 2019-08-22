@@ -2,5 +2,43 @@
  - Created by YuriiDyvak on 07.08.2019.
  -->
 
-<aura:component description="ScrumSubtaskEditModal">
+<aura:component description="ScrumSubtaskEditModal"
+                controller="ScrumTrackTimeController"
+                extends="c:LightningService">
+
+    <aura:attribute name="subtask" type="sObject"/>
+    <aura:attribute name="subtaskId" type="String"/>
+
+    <aura:registerEvent name="scrumDeleteTrackTimeEvent" type="c.ScrumDeleteTrackTimeEvent"/>
+
+    <aura:attribute name="trackTimes" type="Object[]"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <lightning:recordEditForm
+            objectApiName="Subtask__c"
+            recordId="{!v.subtask.Id}"
+            onsuccess="{!c.handleSuccess}">
+
+        <lightning:inputField aura:id="Name" fieldName="Name"/>
+        <lightning:inputField aura:id="PlanTime__c" fieldName="PlanTime__c"/>
+        <lightning:inputField aura:id="SpendTime__c" fieldName="SpendTime__c"/>
+        <lightning:inputField aura:id="Type__c" fieldName="Type__c"/>
+
+        <aura:if isTrue="{!not(empty(v.trackTimes))}">
+            <div>
+                <aura:iteration items="{!v.trackTimes}" var="track">
+                    <!--                    <div onclick="{!c.removeItem}" data-value="{!track.Id}">-->
+                    <lightning:pill label="{!track.CreatedDate + '  =>  ' + track.Track__c + ' hour(s)'}"
+                                    name="{!track.Id}" onremove="{!c.removeItem}"/>
+                    <!--                    </div>-->
+                </aura:iteration>
+            </div>
+        </aura:if>
+
+        <lightning:button aura:id="submit" type="submit" label="Save" class="slds-m-top_medium"/>
+    </lightning:recordEditForm>
+
 </aura:component>

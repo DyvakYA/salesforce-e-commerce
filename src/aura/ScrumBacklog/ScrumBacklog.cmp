@@ -2,16 +2,18 @@
  - Created by YuriiDyvak on 25.07.2019.
  -->
 
-<aura:component description="ScrumBacklog"
-                implements="force:hasRecordId,force:hasSObjectName,flexipage:availableForAllPageTypes"
-                controller="ScrumBacklogController">
+<aura:component description="ScrumBacklog">
 
-    <lightning:card footer="Card Footer" title="Hello">
-        <aura:set attribute="actions">
-            <lightning:button label="New"/>
-        </aura:set>
-        <p class="slds-p-horizontal_small">
-            Card Body (custom component)
-        </p>
-    </lightning:card>
+    <aura:attribute name="sprintId" type="String"/>
+
+    <aura:attribute name="backlogs" type="Object[]"/>
+
+    <aura:if isTrue="{!not(empty(v.backlogs))}">
+        <div>
+            <aura:iteration items="{!v.backlogs}" var="backlog">
+                <c:ScrumBacklogCard sprintId="{!v.sprintId}" backlog="{!backlog}"/>
+            </aura:iteration>
+        </div>
+    </aura:if>
+
 </aura:component>

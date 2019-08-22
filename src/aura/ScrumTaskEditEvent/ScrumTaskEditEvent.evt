@@ -2,5 +2,6 @@
  - Created by YuriiDyvak on 05.08.2019.
  -->
 
-<aura:event type="APPLICATION" description="ScrumTaskEditEvent">
+<aura:event type="COMPONENT" description="ScrumTaskEditEvent">
+    <aura:attribute name="task" type="sObject"/>
 </aura:event>

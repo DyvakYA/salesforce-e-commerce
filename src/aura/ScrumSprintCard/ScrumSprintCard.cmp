@@ -2,43 +2,113 @@
  - Created by YuriiDyvak on 26.07.2019.
  -->
 
-<aura:component description="ScrumSprintCard">
+<aura:component description="ScrumSprintCard"
+                implements="force:hasRecordId,force:hasSObjectName, force:appHostable"
+                controller="ScrumSprintController"
+                extends="c:LightningService">
 
-    <aura:attribute name="sprint" type="sObject"/>
+    <aura:attribute name="sprint" type="Object"/>
 
-    <lightning:card footer="Card Footer" title="Sprint">
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="showTasks" type="Boolean" default="true"/>
+    <aura:attribute name="isOpenModalSprintEdit" type="Boolean" default="false"/>
+
+<!--    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>-->
+    <aura:attribute name="spendTime" type="String"/>
+    <aura:attribute name="productivity" type="String"/>
+
+    <aura:handler name="scrumMoveTaskToBacklogEvent" event="c.ScrumMoveTaskToBacklogEvent"
+                  action="{!c.handleScrumMoveTaskToBacklogEvent}"/>
+    <aura:handler name="scrumSubtaskTrackTimeEvent" event="c.ScrumSubtaskTrackTimeEvent"
+                  action="{!c.trackTime}"/>
+
+    <aura:registerEvent name="scrumSprintProgressRecalculationEvent" type="c.ScrumSprintProgressRecalculationEvent"/>
+
+    <lightning:card class="sprint">
+
         <aura:set attribute="actions">
-            <lightning:button label="New"/>
+            <lightning:buttonIcon iconName="utility:edit" onclick="{!c.showSprintEditModal}"/>
         </aura:set>
+
+        <aura:set attribute="title">
+
+            <div class="slds-grid slds-wrap">
+                <!--                <lightning:icon iconName="utility:connected_apps" size="small"/>-->
+
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="sprint-progress" data-label="{!v.sprint.sprint.Name}">
+                        <span class="value" style="{!'width:'+v.sprint.progress + '%;'}"></span>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 status-center">
+                    Status : {!v.sprint.sprint.Type__c}
+                </div>
+            </div>
+        </aura:set>
+
         <p class="slds-p-horizontal_small">
             <aura:if isTrue="{!v.showSpinner}">
                 <lightning:spinner/>
             </aura:if>
-            <aura:if isTrue="{!!v.saved}">
-                <lightning:recordEditForm
-                        onload="{!c.handleLoad}"
-                        onsubmit="{!c.handleSubmit}"
-                        onsuccess="{!c.handleSuccess}"
-                        recordId="{!v.sprint.Id}"
-                        objectApiName="Sprint__c">
-                    <!-- the messages component is for error messages -->
-                    <lightning:messages/>
-
-                    <lightning:inputField fieldName="Name"/>
-                    <lightning:inputField fieldName="Date_finish__c"/>
-                    <lightning:inputField fieldName="Project__c"/>
-                    <lightning:inputField fieldName="Start_Day__c"/>
-                    <lightning:inputField fieldName="Total_Estimate__c"/>
-                    <lightning:inputField fieldName="Type__c"/>
-                    <div class="slds-m-top_medium">
-                        <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save"
-                                          label="Save"/>
-                    </div>
-                </lightning:recordEditForm>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-7">
+                <lightning:input name="Sprint Start Date" value="{!v.sprint.sprint.Start_Day__c}"
+                                 label="Sprint Start Date" maxlength="10" readonly="true"/>
+            </div>
+            <div class="slds-col slds-size_1-of-7">
+                <lightning:input name="Task estimates" value="{!v.sprint.sprint.Total_Estimate_of_Tasks__c}"
+                                 label="Task estimates" maxlength="10" readonly="true"/>
+            </div>
+            <div class="slds-col slds-size_1-of-7">
+                <lightning:input name="Tracked" value="{!v.sprint.sprint.Total_Track_Time__c}"
+                                 label="Tracked" maxlength="10" readonly="true"/>
+            </div>
+            <div class="slds-col slds-size_1-of-7">
+                <lightning:input name="End date" value="{!v.sprint.sprint.Date_finish__c}"
+                                 label="End date" maxlength="10" readonly="true"/>
+            </div>
+            <div class="slds-col slds-size_1-of-7">
+                <lightning:input name="Weeks" value="{!v.sprint.sprint.Total_Estimate__c}"
+                                 label="Weeks" maxlength="10" readonly="true"/>
+            </div>
+            <div class="slds-col slds-size_1-of-7">
+                <lightning:input name="Spend time" value="{!v.sprint.spendTime + '%'}"
+                                 label="Spend time" maxlength="10" readonly="true"/>
+            </div>
+            <div class="slds-col slds-size_1-of-7">
+                <lightning:input name="Productivity" value="{!v.sprint.productivity + '%'}"
+                                 label="Productivity" maxlength="10" readonly="true"/>
+            </div>
+        </div>
+        <div>
+            <aura:if isTrue="{!v.showTasks}">
                 <aura:set attribute="else">
-        <p>Saved!</p>
-        </aura:set>
+                    <a href="javascript:void(0)" onclick="{!c.showTasks}">
+                        <lightning:icon iconName="utility:chevrondown" alternativeText="chevrondown" size="xx-small"/>
+                        Show tasks
+                    </a>
+                </aura:set>
+                <a href="javascript:void(0)" onclick="{!c.hideTasks}">
+                    <lightning:icon iconName="utility:chevronup" alternativeText="chevronup" size="xx-small"/>
+                    Hide tasks
+                </a>
+            </aura:if>
+        </div>
+        <aura:if isTrue="{!v.showTasks}">
+            <aura:if isTrue="{!not(empty(v.sprint.tasks))}">
+                <lightning:layout multipleRows="true">
+                    <aura:iteration items="{!v.sprint.tasks}" var="task">
+                        <c:ScrumSprintTask task="{!task}" sprintId="{!v.sprint.sprint.Id}"/>
+                    </aura:iteration>
+                </lightning:layout>
+                <aura:set attribute="else">
+                    <div style="text-align: center">Empty</div>
+                </aura:set>
+            </aura:if>
         </aura:if>
         </p>
     </lightning:card>
+
 </aura:component>

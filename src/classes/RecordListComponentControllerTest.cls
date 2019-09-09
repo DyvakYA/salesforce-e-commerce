@@ -36,6 +36,7 @@ public with sharing class RecordListComponentControllerTest {
         List<RecordListComponentService.FieldRecord> result = RecordListComponentController.getFieldRecords('Account', String.valueOf(account.Id), 'test');
         System.assert(result.size() > 0);
     }
-
-
 }
+
+
+

@@ -6,6 +6,10 @@ public interface OrgIntegrationRequest {
 
     void accept(OrgIntegrationVisitor visitor);
 
-    void execute();
+    void setToken(String token);
+
+    void setContentType(String contentType);
+
+    List<Account> execute();
 }
 

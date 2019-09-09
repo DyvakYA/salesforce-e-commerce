@@ -62,8 +62,8 @@
     handleScrumTaskEvent: function (cmp, evt, helper) {
         const task = evt.getParam('task');
         cmp.set("v.task.task", task);
-    }
-    ,
+    },
+
     moveToBacklog: function (cmp, evt, helper) {
 
         const task = cmp.get('v.task')

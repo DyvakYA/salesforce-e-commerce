@@ -8,6 +8,6 @@ public interface OrgIntegrationConnector {
 
     OrgIntegrationVisitor getAuthProvider();
 
-    OrgIntegrationVisitor getRequestTypeProvider();
+    OrgIntegrationVisitor getContentTypeProvider();
 
 }

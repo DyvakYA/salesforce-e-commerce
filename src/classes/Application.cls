@@ -13,7 +13,8 @@ public class Application {
                     ScrumBacklogService.class => ScrumBacklogService.class,
                     ScrumSubtaskService.class => ScrumSubtaskService.class,
                     ScrumTrackTimeService.class => ScrumTrackTimeService.class,
-                    ScrumTaskService.class => ScrumTaskService.class
+                    ScrumTaskService.class => ScrumTaskService.class,
+                    OrgIntegrationService.class => OrgIntegrationService.class
             });
 
     public static final Factory.UtilFactory Util = new Factory.UtilFactory(

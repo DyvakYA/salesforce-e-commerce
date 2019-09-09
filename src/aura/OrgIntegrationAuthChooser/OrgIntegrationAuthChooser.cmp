@@ -1,0 +1,30 @@
+<!--
+ - Created by YuriiDyvak on 23.08.2019.
+ -->
+
+<aura:component description="OrgIntegrationAuthChooser"
+                extends="c:LightningService"
+                controller="OrgIntegrationController">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:registerEvent name="getAccountsEvent" type="c.OrgIntegrationGetAccountsEvent"/>
+
+    <aura:attribute name="options" type="List"/>
+
+    <aura:attribute name="value" type="String" default="Username-password flow"/>
+
+    <aura:attribute name="accounts" type="sObject[]"/>
+
+    <lightning:card>
+        <lightning:radioGroup name="Checkbox Group"
+                              label="Checkbox Group"
+                              options="{! v.options }"
+                              value="{! v.value }"
+                              type="radio"/>
+
+        <lightning:button variant="success" label="Get external accounts" title="Get external accounts"
+                          onclick="{! c.getAccountsFromOrg }"/>
+    </lightning:card>
+
+</aura:component>

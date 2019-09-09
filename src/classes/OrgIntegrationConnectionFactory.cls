@@ -8,7 +8,10 @@ public class OrgIntegrationConnectionFactory {
 
     static {
         factory = new Map<String, OrgIntegrationConnector>{
-                'First' => new OrgIntegrationConnectorFirst()
+                'Username-password flow' => new OrgIntegrationUsernamePasswordConnector(),
+                'User-agent flow' => null,
+                'Web server flow' => null,
+                'Named Credential' => new OrgIntegrationNamedCredentialConnector()
         };
     }
 

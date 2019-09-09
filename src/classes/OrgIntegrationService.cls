@@ -4,23 +4,23 @@
 
 public class OrgIntegrationService {
 
-    void execute() {
+    public List<Account> getExternalAccounts(String authType) {
         // abstract factory
-        OrgIntegrationConnector connector = OrgIntegrationConnectionFactory.getConnector('First');
+        OrgIntegrationConnector connector = OrgIntegrationConnectionFactory.getConnector(authType);
 
         // request from factory
         OrgIntegrationRequest request = connector.getIntegrationRequest();
 
         // visitors from factory for request
         OrgIntegrationVisitor authVisitor = connector.getAuthProvider();
-        OrgIntegrationVisitor typeVisitor = connector.getRequestTypeProvider();
+        OrgIntegrationVisitor typeVisitor = connector.getContentTypeProvider();
 
-        // visitor
+        // visit
         request.accept(authVisitor);
         request.accept(typeVisitor);
 
         // execution
-        List<Account> accounts = request.execute();
+        return request.execute();
     }
 
 

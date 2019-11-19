@@ -9,6 +9,4 @@ public class ScheduleSprintEndDate implements Schedulable {
     public void execute(SchedulableContext param1) {
         Id bachId = Database.executeBatch(new SchedulerCheckIfSprintDateEndBatch());
     }
-
-
 }

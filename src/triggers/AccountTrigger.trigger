@@ -8,7 +8,7 @@ trigger AccountTrigger on Account (after insert, after update) {
             TerrUserHandler.setAccountAndContactPermissionsByAccount(Trigger.new);
         }
         if (Trigger.isUpdate) {
-            TerrUserHandler.setAccountAndContactPermissionsByAccount(Trigger.new);
+            // TerrUserHandler.setAccountAndContactPermissionsByAccount(Trigger.new);
         }
     }
 }
